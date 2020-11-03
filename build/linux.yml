@@ -32,6 +32,7 @@ steps:
 - script: |
     set -e
     libpcre2_sys=$(find . -name libpcre2_sys*.rlib)
-    otool -L $libpcre2_sys
+    rg_path=$(find . -name rg)
+    otool -L $rg_path
   displayName: Verify library
   workingDirectory: ripgrep
