@@ -36,3 +36,15 @@ steps:
     otool -L $rg_path
   displayName: Verify library
   workingDirectory: ripgrep
+- script: ../build/package.sh
+  displayName: Package
+  workingDirectory: ripgrep
+  env:
+    TARGET: ${{ parameters.target }}
+    OUT_DIR: .build
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Pipeline Artifact'
+  workingDirectory: ripgrep
+  inputs:
+    artifactName: $(Name)
+    targetPath: .build/$(Name)
