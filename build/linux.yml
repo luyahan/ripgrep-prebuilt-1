@@ -29,16 +29,9 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
-- script: ../build/package.sh
-  displayName: Package
+- script: |
+    set -e
+    libpcre2_sys=$(find . -name libpcre2_sys*.rlib)
+    otool -L $libpcre2_sys
+  displayName: Verify library
   workingDirectory: ripgrep
-  env:
-    TARGET: ${{ parameters.target }}
-    OUT_DIR: $(Build.ArtifactStagingDirectory)
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
-- task: PublishPipelineArtifact@0
-  displayName: 'Publish Pipeline Artifact'
-  inputs:
-    artifactName: $(Name)
-    targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
