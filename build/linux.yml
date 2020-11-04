@@ -44,7 +44,6 @@ steps:
     OUT_DIR: .build
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Pipeline Artifact'
-  workingDirectory: ripgrep
   inputs:
     artifactName: $(Name)
     targetPath: .build/$(Name)
